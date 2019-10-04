@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display Webcam Stream</title>
+ <!-- <script src="js/script.js"></script> -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+<link rel="stylesheet" href="css/master.css">
+</head>
+<body>
+<div class="nav">
+    <div class="banner">
+      <img src="img/logo.png" >
+    </div>
+</div>
+<!-- 
+<div class="banner01">
+<img src="http://storage-asset.msi.com/global/picture/banner/P65-P75-Creators.jpg" alt="">
+</div> -->
+<br><br>
+<div class="columns is-centered">
+    <div class="column is-1">
+
+    </div>
+      
+    <div id="column is-5">
+        <!-- <video autoplay="true" id="videoElement">
+        </video> -->
+        <img src="img/drive_resized.jpg" id="videoElement"  alt="">
+        <br><br>
+        <button type="button" class="button is-large is-info is-outlined ">CAPTURE</button>
+        <br><br>
+        <div class="columns">
+          <div class="column"></div>
+        </div>
+    </div>
+    <div class="column is-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Sr. No</th>
+            <th>Product ID</th>
+            <th>Name of Product</th>
+            <th>Quantity </th>
+            <th>Cost of Production</th>
+            <th>Final cost of Product</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>234</td>
+            <td>XYZ Toothpaste-Small</td>
+            <td>1</td>
+            <td>20</td>
+            <td>20</td> 
+          </tr>  
+          <tr>
+              <th>2</th>
+              <td>234</td>
+              <td>XYZ Toothpaste-Small</td>
+              <td>1</td>
+              <td>20</td>
+              <td>20</td> 
+            </tr>   
+            <tr>
+                <th>3</th>
+                <td>234</td>
+                <td>XYZ Toothpaste-Small</td>
+                <td>1</td>
+                <td>20</td>
+                <td>20</td> 
+              </tr>   
+              <tr>
+                  <th>4</th>
+                  <td>234</td>
+                  <td>XYZ Toothpaste-Small</td>
+                  <td>1</td>
+                  <td>20</td>
+                  <td>20</td> 
+                </tr>        
+        </tbody>
+      </table>
+    </div>
+    <div class="column is-1">
+
+      </div>
+</div>
+
+<!-- <script>
+    var video = document.querySelector("#videoElement");
+    // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+    
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+          console.log("Something went wrong!");
+        });
+    }
+    
+    </script> -->
+</body>
+</html>

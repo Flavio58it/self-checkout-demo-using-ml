@@ -1,0 +1,43 @@
+body{
+    padding: 0px;
+    margin: 0px;
+}
+.nav{
+    height: 100px;
+    background: rgb(195,195,195);
+    width: 100%;
+}
+.banner{
+    overflow: hidden;
+}
+
+.banner img{
+    height: 100px;
+}
+
+.banner01{
+    width: 100%;
+    background: url('../img/banner01.jpg');
+    background-repeat: repeat-x;
+
+}
+/* .banner01 img{
+    width: 100%
+
+} */
+
+/* #container {
+	width: 590px;
+    height: 400px;
+    overflow: hidden;
+} */
+#videoElement {
+	width: 100%;
+    height: atuo;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+button{
+    font-family: calibri;
+}
