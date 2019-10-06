@@ -45,3 +45,8 @@ button{
 thead tr{
     background: aqua;
 }
+
+#canvas{
+    background: #999;
+    display: block;
+}
