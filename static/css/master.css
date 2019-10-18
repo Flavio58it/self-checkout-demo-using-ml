@@ -1,0 +1,41 @@
+body{
+    padding: 0px;
+    margin: 0px;
+}
+.nav{
+    height: 100px;
+    background: rgb(195,195,195);
+    width: 100%;
+}
+.banner{
+    overflow: hidden;
+}
+
+.banner img{
+    height: 100px;
+}
+
+.banner01{
+    width: 100%;
+    background: url('../img/banner01.jpg');
+    background-repeat: repeat-x;
+
+}
+
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #section-to-print, #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  #print{
+    display: none;
+  }
+}

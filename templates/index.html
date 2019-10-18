@@ -1,0 +1,190 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Display Webcam Stream</title>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/master.css')}}">
+    <style>
+	body{
+	// background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+
+	}
+       thead, thead tr{
+	       background:#0f0f0f;
+		      
+	}
+	.modal{
+		z-index:2000;
+	}
+    </style>
+    </head>
+    <body>
+    <nav class="navbar is-dark" style="background:#000000">
+      <div class="navbar-brand">
+        <h2 class="navbar-item has-text-white" style="weight:900" >
+          <img src="{{url_for('static', filename='img/logo.png')}}" style="width:170px; height:70px; max-height:100px;margin-left:10px;">
+   
+	</h2>
+      </div>
+      <div class="navbar-end" href="cart">
+        <a class="navbar-item">
+          <img src="{{url_for('static', filename='img/cart.png')}}" onclick="showModal()"  style="width:80px; height:60px; max-height:70px;margin-right:10px;">
+        </a>
+      </div>
+
+    </nav>
+
+  <br><br>
+    <div class="container">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-8" style="height:500px">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-dark" style="padding:0px;">
+              <p class="subtitle" style="width:100%;padding:20px;background:rgba(195,195,195,.5);position:absolute;z-index:200;">Place the item in front of Camera</p>
+		<img  src="{{ url_for('video_feed') }}" id="videoElement" style="width:100%;height:100%;position:absolute;" alt="">
+              
+	<!--  <form enctype=multipart/form-data action="/capture" method = "POST" >
+            <input type="submit" class="button is-info is-large" style="position: absolute; bottom:10px;right:10px;" value="capture">   
+          </form>
+
+-->
+
+
+   <button type="btn" class="button is-info is-large" style="position: absolute; bottom:10px;right:10px;"  onclick="load_Data()"> CAPTURE </button> 
+            </article>
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-dark">
+            <div class="content">
+                <p class="title is-4 has-text-white" id="itemTitle">
+		</p>
+                <p class="subtitle" style="padding-top:10px;">Quantity : <input type="text" name="quantity" id="qty" value="1" style="width:30px;text-align:center;border-radius:5px;outline:none;border:none"></p>
+              <a class="button is-primary is-outlined is-large is-fullwidth" onclick="addCart()">Add to Cart</a><br><br>
+              <a class="button is-primary is-outlined is-large is-fullwidth" onclick="showModal()">Proceed to Checkout</a>
+            </div>
+          </article>
+        </div>
+      </div>
+<p id="hint" class="title is-3 has-text-warning"></p>
+    </div>
+    <div class="modal" id="section-to-print">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head is-dark">
+            <p class="modal-card-title">
+              <img src="{{url_for('static', filename='img/logo.png')}}" style="width:170px; height:70px; max-height:100px;margin-left:10px;">
+            </p>
+            <button class="delete" aria-label="close" onclick="hideModal()"></button>
+          </header>
+          <section class="modal-card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="color:#fff;">Sr. No</th>
+                  <th style="color:#fff;">Product ID</th>
+                  <th style="color:#fff;">Name of Product</th>
+                  <th style="color:#fff;">Quantity</th>
+                  <th style="color:#fff;">Cost of Product</th>
+                  <th style="color:#fff;">Final Cost of Product</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+              </tbody>
+              <tfoot>
+                <tr> 
+                  <th colspan="5" style="text-align:right;">
+                    Final Cost :
+                  </th>
+                  <th colspan="1" id="final_cost">
+                      
+                    </th>
+                </tr>
+              </tfoot>
+            </table>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-info" id="print" onclick="printInvoice()"> Print Invoice</button>
+            <!-- <button class="button">Cancel</button> -->
+          </footer>
+        </div>
+      </div>
+
+<script>
+function load_Data() {
+  document.getElementById("hint").innerHTML = "please wait !! processing image..."
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	_item = JSON.parse(this.responseText);
+	window.prod = _item.productName;
+	window.prodID = _item.productID;
+	window.prodCost = _item.productCost;
+	document.getElementById("itemTitle").innerHTML = _item.productName;
+	document.getElementById("hint").innerHTML = "image processed...";
+	document.getElementById("hint").className = "title is-3 has-text-success";
+	
+  
+    }
+  };
+  xhttp.open("GET", "/capture", true);
+  xhttp.send();
+}
+</script>
+
+
+<script>
+
+function printInvoice(){
+  window.print();
+}
+
+function hideModal(){
+  document.getElementById('section-to-print').style.display = 'none';
+}
+
+function showModal(){
+  document.getElementById('section-to-print').style.display = 'block';
+
+}
+</script>
+<script>
+window.fc = 0;
+window.sr= 1;
+function addCart(){
+    let t_bdy = document.getElementById("tableBody");
+    var qty = document.getElementById("qty").value;
+    var t_cost = qty * parseInt( window.prodCost);
+    window.fc = fc + t_cost;
+    var tableData = "<td>" +window.sr +"</td><td> "+ window.prodID +"</td> <td> "+ window.prod+" </td><td>"+ qty +"</td> <td> "+ window.prodCost+" </td>"+ t_cost + "<td></td>";
+    window.sr =window.sr + 1;
+    var entry = document.createElement('tr');
+    entry.innerHTML = tableData;
+    t_bdy.appendChild(entry);
+    
+    document.getElementById("final_cost").innerHTML = window.fc ;
+   
+}
+
+
+</script>
+
+<script>
+      var video = document.querySelector("#videoElement");
+      // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+      
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream;
+          })
+          .catch(function (err0r) {
+            console.log("Something went wrong!");
+          });
+      }
+      
+</script>
+    </body>
+    </html>
